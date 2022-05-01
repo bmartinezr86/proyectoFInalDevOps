@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-wp
+  namespace: brizzom
+spec:
+  clusterIP: 10.96.1.2 # Si le damos una ip fija no habrá posibilida de que el wordpess no la encuentre
+  ports:
+    - port: 3306
+      nodePort: 30306 
+  type: NodePort
+  selector:
+    app: wordpress
+    tier: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-wp
+  namespace: brizzom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:latest
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret-t528m5fm89
+              key: password
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-c2ffd95925
+              key: username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-password-tc2b66d7df
+              key: passworduser
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-database-969fb25925
+              key: database
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
