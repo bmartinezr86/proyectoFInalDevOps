@@ -34,7 +34,7 @@ spec:
         tier: web1
     spec:
       containers:
-      - image: wordpress:php8.1-apache
+      - image: bmartinez7m/brizzom:0.0.1
         name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
