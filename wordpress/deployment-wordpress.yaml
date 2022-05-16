@@ -34,25 +34,35 @@ spec:
         tier: web1
     spec:
       containers:
-      - image: bmartinez7m/brizzom:0.0.1
+      - image: bmartinez7m/brizzom:0.0.6
         name: wordpress
         env:
+        - name: WPVAR_WP_HOME
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-brizzom
+              key: WP_HOME
+        - name: WPVAR_WP_SITEURL
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-brizzom
+              key: WP_SITEURL
         - name: WORDPRESS_DB_HOST
           value: mysql-wp:3306
         - name: WORDPRESS_DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-user-password-tc2b66d7df
+              name: mysql-user-password-f25g5b6ch5
               key: passworduser
         - name: WORDPRESS_DB_USER
           valueFrom:
             secretKeyRef:
-              name: mysql-user-c2ffd95925
+              name: mysql-user-h7c7mk6998
               key: username
         - name: WORDPRESS_DB_NAME
           valueFrom:
             secretKeyRef:
-              name: mysql-database-969fb25925
+              name: mysql-database-bthhg7fbdf
               key: database
         ports:
         - containerPort: 80

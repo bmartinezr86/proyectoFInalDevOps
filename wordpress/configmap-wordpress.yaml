@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-brizzom
+  namespace: brizzom
+data:
+  WP_HOME: http://192.168.49.2:30080
+  WP_SITEURL: http://192.168.49.2:30080

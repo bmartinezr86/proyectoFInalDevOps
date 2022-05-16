@@ -1,17 +1,17 @@
 secretGenerator:
-- name: mysql-secret
+- name: mysql-root
   namespace: brizzom
   literals:
-  - password=admin1
+  - password=brizzomRoot2022@
 - name: mysql-user
   namespace: brizzom
   literals:
-  - username=wordpressUser
+  - username=brizzomUser
 - name: mysql-user-password
   namespace: brizzom
   literals:
-  - passworduser=admin1
+  - passworduser=brizzom2022@
 - name: mysql-database
   namespace: brizzom
   literals:
-  - database=db_wordpress
+  - database=db_brizzom

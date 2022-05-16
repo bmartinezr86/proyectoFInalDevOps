@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    stages{
+        stage('Clone repository') {
+            echo 'clonando el repositorio...'
+            sh 'git --clone https://github.com/bmartinezr86/pruebasGit.git'
+         }
+
+        stage('Migration db') {
+             steps  {
+                echo 'Generando copia de la base de datos...'
+                sh 'fecha=$(date +"%Y-%m-%d-%H-%M-%S")'
+                sh 'sqlDump="sqlDump-$fecha.sql"'
+                sh 'docker exec mysql-dev sh -c "exec mysqldump --all-databases -u root -pbrizzom2022@" > db_backups/$sqlDump'
+
+                echo 'Volcando la base de datos en el pod de mysql...'
+                sh 'kubectl -n brizzom exec -i mysql-wp-74b4cc6fb8-tv847 --mysql -u root -pbrizzom2022@ db_brizzom < db_backups/$sqlDump'
+            }
+        }
+
+        stage('Push') {
+            steps  {
+                GithubCredemtials: [
+                      string(credentialsId: 'github-bmartinezr86', variable: 'api_token')
+                      ]) {
+	            }
+            }
+        }
+
+        stage('Deploy') {
+            steps  {
+                sh './corregirURL.sh'
+                sh 'cd wordpress'
+                sh './despliegue.sh'
+                sh 'cd'
+            }
+        }
+
+}
