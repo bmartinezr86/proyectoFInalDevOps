@@ -3,7 +3,8 @@ pipeline {
     stages{
         stage('Clone repository') {
             echo 'clonando el repositorio...'
-            sh 'git --clone https://github.com/bmartinezr86/pruebasGit.git'
+            sh 'git --clone https://github.com/bmartinezr86/proyectoFInalDevOps.git'
+            
          }
 
         stage('Migration db') {
@@ -18,14 +19,14 @@ pipeline {
             }
         }
 
-        stage('Push') {
-            steps  {
-                GithubCredemtials: [
-                      string(credentialsId: 'github-bmartinezr86', variable: 'api_token')
-                      ]) {
-	            }
-            }
-        }
+        //stage('Push') {
+            //steps  {
+              //  GithubCredemtials: [
+                //      string(credentialsId: 'github-bmartinezr86', variable: 'api_token')
+                  //    ]) {
+	            //}
+            //}
+        //}
 
         stage('Deploy') {
             steps  {
