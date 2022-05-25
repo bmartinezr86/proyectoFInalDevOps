@@ -15,7 +15,7 @@ spec:
  
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment                                       
 metadata:
   name: wordpress
   namespace: brizzom
@@ -34,7 +34,8 @@ spec:
         tier: web1
     spec:
       containers:
-      - image: bmartinez7m/brizzom:0.0.6
+      - image: bmartinez7m/brizzom:k8s-0.0.2
+        imagePullPolicy: Always
         name: wordpress
         env:
         - name: WPVAR_WP_HOME
@@ -47,9 +48,14 @@ spec:
             configMapKeyRef:
               name: configmap-brizzom
               key: WP_SITEURL
+        - name: WPVAR_FS_METHOD
+          valueFrom:
+            configMapKeyRef:
+              name: configmap-brizzom
+              key: FS_METHOD
         - name: WORDPRESS_DB_HOST
           value: mysql-wp:3306
-        - name: WORDPRESS_DB_PASSWORD
+        - name: WORDPRESS_DB_PASSWORD                                      
           valueFrom:
             secretKeyRef:
               name: mysql-user-password-f25g5b6ch5
