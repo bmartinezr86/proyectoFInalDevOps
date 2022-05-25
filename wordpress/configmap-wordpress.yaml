@@ -6,3 +6,4 @@ metadata:
 data:
   WP_HOME: http://192.168.49.2:30080
   WP_SITEURL: http://192.168.49.2:30080
+  FS_METHOD: direct

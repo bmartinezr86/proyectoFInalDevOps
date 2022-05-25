@@ -1,19 +1,17 @@
 #!/bin/bash
 
-# borrar copia del volumen anterior
-rm -R Wordpress/wordpress
-
 # copiar el contenido del direcotorio /var/www/html del contenedor de brizozm-dev a el directorio Wordpress/wordpress
-docker cp brizzom-dev:/var/www/html Wordpress/wordpress
+docker cp brizzom-dev:/var/www/html/ Wordpress/wordpress
+
 
 # construir la imagen
-cd Wordpress
+cd Wordpress 
 read -p "¿Que version de la imagen es? [latest]: " version
 if [[ "$version" == "" ]]
 then
-   docker build -t bmartinez7m/brizzom:latest .
+   docker build -t bmartinez7m/brizzom:latest --no-cache .
 else
-   docker build -t bmartinez7m/brizzom:$version -t bmartinez7m/brizzom:latest .
+   docker build -t bmartinez7m/brizzom:$version -t bmartinez7m/brizzom:latest --no-cache .
 fi
 
 # loguearse en docker hub
