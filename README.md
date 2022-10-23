@@ -28,7 +28,6 @@ Cómo medio de comunicación para los avisos de Jenkins y el tráfico que pasara
 **Resultados esperados**  
 * Queremos aprender a hacer uso de Docker y Kubernetes con una aplicación simple como lo es WordPress, además de aplicar la implementación continua (CI) a un repositorio de Github o Docker hub y el despliegue continuo (CD) con Jenkins a los servidores de producción, para desplegar los entornos de trabajo de manera mucho más rápida y segura. Logrando así obtener un producto de calidad en un menor tiempo.
 
-El proyecto lo encontraremos [aquí](./Proyecto)
 
 
 
